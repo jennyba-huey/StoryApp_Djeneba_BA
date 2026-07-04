@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="700" prefWidth="1100" styleClass="root-pane" stylesheets="@../resources/css/style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StoryProject.controller.StoryController">
+
+    <!-- ══ EN-TÊTE ══ -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="16" styleClass="form-header">
+            <Button fx:id="btnEnteteRetourAccueil" onAction="#onBtnHeaderBackHome" styleClass="btn-ghost" text="← Accueil" />
+            <Separator orientation="VERTICAL" styleClass="header-sep" />
+            <Label fx:id="lblEnteteMode" styleClass="page-title" text="Nouvelle histoire" HBox.hgrow="ALWAYS" />
+            <Button fx:id="btnExporterPdf" onAction="#onBtnExportPdf" styleClass="btn-secondary" text="Exporter en PDF" visible="false" />
+            <Button fx:id="btnSupprimerHistoire" onAction="#onBtnDeleteStory" styleClass="btn-danger" text="Supprimer" visible="false" />
+        </HBox>
+    </top>
+
+    <!-- ══ CONTENU : formulaire gauche + listes droite ══ -->
+    <center>
+        <HBox spacing="0" VBox.vgrow="ALWAYS">
+
+            <!-- Colonne gauche : formulaire histoire -->
+            <ScrollPane fitToWidth="true" minWidth="380" prefWidth="420" styleClass="form-scroll">
+                <VBox spacing="28" styleClass="form-panel">
+
+                    <!-- Bloc titre -->
+                    <VBox spacing="6" styleClass="field-group">
+                        <Label styleClass="field-label" text="TITRE" />
+                        <TextField fx:id="txtSaisieTitre" promptText="Le nom de votre histoire" styleClass="field-input" />
+                        <Label fx:id="lblErreurTitre" styleClass="field-error" text="" visible="false" />
+                    </VBox>
+
+                    <!-- Bloc auteur -->
+                    <VBox spacing="6" styleClass="field-group">
+                        <Label styleClass="field-label" text="AUTEUR" />
+                        <TextField fx:id="txtSaisieAuteur" promptText="Votre nom" styleClass="field-input" />
+                        <Label fx:id="lblErreurAuteur" styleClass="field-error" text="" visible="false" />
+                    </VBox>
+
+                    <!-- Bloc genre -->
+                    <VBox spacing="6" styleClass="field-group">
+                        <Label styleClass="field-label" text="GENRE" />
+                        <ComboBox fx:id="cboGenreHistoire" maxWidth="Infinity" promptText="Choisissez un genre" styleClass="field-input" />
+                        <Label fx:id="lblErreurGenre" styleClass="field-error" text="Le genre est obligatoire" visible="false" />
+                    </VBox>
+
+                    <!-- Bloc résumé -->
+                    <VBox spacing="6" styleClass="field-group">
+                        <HBox alignment="CENTER_LEFT">
+                            <Label styleClass="field-label" text="RÉSUMÉ   " HBox.hgrow="ALWAYS" />
+                            <Label fx:id="lblCompteurCaracteres" styleClass="char-counter" text="0 / 500" />
+                        </HBox>
+                        <TextArea fx:id="txtSaisieResume" prefHeight="219.0" prefRowCount="6" prefWidth="352.0" promptText="De quoi parle votre histoire ?" styleClass="field-textarea" wrapText="true" />
+                    </VBox>
+
+                    <!-- Actions -->
+                    <HBox alignment="CENTER_RIGHT" spacing="12">
+                        <Button fx:id="btnAnnulerHistoire" onAction="#onBtnCancelStory" styleClass="btn-ghost" text="Annuler" />
+                        <Button fx:id="btnSauvegarderHistoire" defaultButton="true" onAction="#onBtnSaveStory" styleClass="btn-primary" text="Sauvegarder" />
+                    </HBox>
+
+                </VBox>
+            </ScrollPane>
+
+            <!-- Séparateur vertical -->
+            <Separator orientation="VERTICAL" styleClass="panel-separator" />
+
+            <!-- Colonne droite : personnages + scènes -->
+            <VBox spacing="0" HBox.hgrow="ALWAYS">
+
+                <!-- ── Section personnages ── -->
+                <VBox spacing="16" styleClass="list-panel" VBox.vgrow="ALWAYS">
+
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label fx:id="lblTitreListePersonnages" styleClass="section-title" text="PERSONNAGES" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="btnAjouterPersonnage" onAction="#onBtnAddCharacter" styleClass="btn-secondary" text="+ Ajouter" />
+                    </HBox>
+
+                    <ListView fx:id="listAffichagePersonnages" styleClass="entity-list" VBox.vgrow="ALWAYS" />
+
+                    <Label fx:id="lblEtatVidePersonnages" styleClass="empty-list-label" text="Aucun personnage pour l'instant" />
+
+                    <HBox fx:id="hboxActionsPersonnage" alignment="CENTER_RIGHT" spacing="8" visible="false">
+                        <Button fx:id="btnModifierPersonnage" onAction="#onBtnEditCharacter" styleClass="btn-ghost-sm" text="Modifier" />
+                        <Button fx:id="btnSupprimerPersonnage" onAction="#onBtnDeleteCharacter" styleClass="btn-danger-sm" text="Retirer" />
+                    </HBox>
+
+                </VBox>
+
+                <Separator styleClass="panel-separator-h" />
+
+                <!-- ── Section scènes ── -->
+                <VBox spacing="12" styleClass="list-panel" VBox.vgrow="ALWAYS">
+
+                    <!-- En-tête : titre + bouton Ajouter uniquement -->
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label fx:id="lblTitreListeScenes" styleClass="section-title" text="SCÈNES" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="btnAjouterScene" onAction="#onBtnAddScene" styleClass="btn-secondary" text="+ Ajouter" />
+                    </HBox>
+
+                    <!-- Statistiques de l'histoire -->
+                    <VBox spacing="3" styleClass="stats-zone">
+                        <Label styleClass="section-title" text="STATISTIQUES" />
+                        <Label fx:id="lblStatNbPersonnages" text="Personnages : 0" />
+                        <Label fx:id="lblStatNbScenes" text="Scènes : 0" />
+                        <Label fx:id="lblStatScenesParStatut" text="Brouillon : 0    En cours : 0    Terminé : 0" />
+                    </VBox>
+
+                    <!-- Une seule barre de recherche / filtres -->
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <TextField fx:id="txtRechercheScene" promptText="Rechercher un mot-clé..." styleClass="field-input" HBox.hgrow="ALWAYS" />
+                        <ComboBox fx:id="cboSceneFiltrageScene" prefWidth="160.0" promptText="Tous les statuts" styleClass="field-combo" />
+                        <ComboBox fx:id="cboFiltrePersonnageScene" prefWidth="185.0" promptText="Tous les personnages" styleClass="field-combo" />
+                        <Button fx:id="btnAnnulerFiltrageScene" onAction="#onBtnClearSceneFilters" styleClass="btn-secondary" text="Réinitialiser" />
+                    </HBox>
+
+                    <ListView fx:id="listAffichageScenes" styleClass="entity-list" VBox.vgrow="ALWAYS" />
+
+                    <Label fx:id="lblEtatVideScenes" styleClass="empty-list-label" text="Aucune scène pour l'instant" />
+
+                    <HBox fx:id="hboxActionsScene" alignment="CENTER_RIGHT" spacing="8" visible="false">
+                        <Button fx:id="btnModifierScene" onAction="#onBtnEditScene" styleClass="btn-ghost-sm" text="Modifier" />
+                        <Button fx:id="btnSupprimerScene" onAction="#onBtnDeleteScene" styleClass="btn-danger-sm" text="Retirer" />
+                    </HBox>
+
+                </VBox>
+
+            </VBox>
+        </HBox>
+    </center>
+
+</BorderPane>

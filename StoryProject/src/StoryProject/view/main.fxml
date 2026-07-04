@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="700" prefWidth="1100" styleClass="root-pane" stylesheets="@../resources/css/style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StoryProject.controller.MainController">
+
+    <left>
+        <VBox prefWidth="220" spacing="0" styleClass="sidebar">
+
+            <VBox spacing="4" styleClass="sidebar-brand">
+                <Label fx:id="lblNavTitreApp" styleClass="brand-title" text="StoryProject" />
+                <Label styleClass="brand-sub" text="L'art de l'écriture" />
+            </VBox>
+
+            <VBox spacing="8" styleClass="sidebar-section">
+                <TextField fx:id="txtNavRechercheHistoire" onKeyReleased="#onTxtNavSearchStory" promptText="Rechercher..." styleClass="search-field" />
+            </VBox>
+
+            <Separator styleClass="sidebar-separator" />
+
+            <VBox spacing="8" styleClass="sidebar-section">
+                <Button fx:id="btnNavNouvelleHistoire" maxWidth="Infinity" onAction="#onBtnNavNewStory" styleClass="btn-primary-full" text="+ Nouvelle histoire" />
+                <Button fx:id="btnNavStatistiques" maxWidth="Infinity" onAction="#onBtnNavStatistics" styleClass="btn-primary-full" text="Statistiques" />
+            </VBox>
+
+            <Separator styleClass="sidebar-separator" />
+
+            <!-- ══ STATISTIQUES (globales OU d'une histoire sélectionnée) ══ -->
+            <VBox spacing="10" styleClass="sidebar-section">
+
+                <Label fx:id="lblStatCategorie" styleClass="sidebar-category" text="STATISTIQUES" />
+                <Label fx:id="lblRetourGlobal" onMouseClicked="#onBackToGlobalStats" styleClass="link-retour" text="← Vue globale (toutes les histoires)" visible="false" managed="false" wrapText="true" />
+
+                <!-- Carte + liste déroulante : HISTOIRES -->
+                <VBox spacing="6">
+                    <VBox fx:id="cardStatHistoires" onMouseClicked="#onStatStoriesClick" styleClass="kpi-card">
+                        <Label fx:id="lblStatHistoires" styleClass="kpi-number" text="0" />
+                        <Label styleClass="kpi-label" text="Histoires" />
+                    </VBox>
+                    <VBox fx:id="vboxListeHistoires" spacing="2" styleClass="kpi-dropdown" visible="false" managed="false" />
+                </VBox>
+
+                <!-- Carte + liste déroulante : PERSONNAGES -->
+                <VBox spacing="6">
+                    <VBox fx:id="cardStatPersonnages" onMouseClicked="#onStatCharactersClick" styleClass="kpi-card">
+                        <Label fx:id="lblStatPersonnages" styleClass="kpi-number" text="0" />
+                        <Label styleClass="kpi-label" text="Personnages" />
+                    </VBox>
+                    <VBox fx:id="vboxListePersonnages" spacing="2" styleClass="kpi-dropdown" visible="false" managed="false" />
+                </VBox>
+
+                <!-- Carte + liste déroulante : SCÈNES -->
+                <VBox spacing="6">
+                    <VBox fx:id="cardStatScenes" onMouseClicked="#onStatScenesClick" styleClass="kpi-card">
+                        <Label fx:id="lblStatScenes" styleClass="kpi-number" text="0" />
+                        <Label styleClass="kpi-label" text="Scènes" />
+                    </VBox>
+                    <VBox fx:id="vboxListeScenes" spacing="2" styleClass="kpi-dropdown" visible="false" managed="false" />
+                </VBox>
+
+                <!-- Carte SCÈNES TERMINÉES (pas de liste, juste le %) -->
+                <VBox styleClass="kpi-card">
+                    <Label fx:id="lblStatTermine" styleClass="kpi-number" text="0 %" />
+                    <Label styleClass="kpi-label" text="Scènes terminées" />
+                </VBox>
+
+            </VBox>
+
+            <Separator styleClass="sidebar-separator" />
+
+            <VBox spacing="4" styleClass="sidebar-section" VBox.vgrow="ALWAYS">
+                <Label styleClass="sidebar-category" text="MES HISTOIRES" />
+                <Label fx:id="lblNavNombreHistoires" styleClass="sidebar-count" text="0 histoire" />
+            </VBox>
+
+            <VBox spacing="2" styleClass="sidebar-footer">
+                <Label fx:id="lblPiedVersion" styleClass="footer-version" text="v1.0.0" />
+                <Label styleClass="footer-school" text="EFREI · BDML ING1" />
+            </VBox>
+
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="0" styleClass="main-content">
+
+            <ScrollPane fitToWidth="true" styleClass="cards-scroll" VBox.vgrow="ALWAYS">
+                <VBox spacing="24" styleClass="cards-container">
+
+                    <GridPane fx:id="gridAffichageHistoires" hgap="20" styleClass="stories-grid" vgap="20">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="ALWAYS" percentWidth="33.33" />
+                            <ColumnConstraints hgrow="ALWAYS" percentWidth="33.33" />
+                            <ColumnConstraints hgrow="ALWAYS" percentWidth="33.33" />
+                        </columnConstraints>
+                    </GridPane>
+
+                    <VBox fx:id="vboxEtatVide" alignment="CENTER" spacing="16" styleClass="empty-state">
+                        <Label styleClass="empty-title" text="Votre atelier est vide" />
+                        <Label styleClass="empty-sub" text="Commencez par créer votre première histoire" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="btnEtatVideCreerHistoire" onAction="#onBtnEmptyStateCreateStory" styleClass="btn-primary" text="Créer une histoire" />
+                    </VBox>
+
+                </VBox>
+            </ScrollPane>
+
+        </VBox>
+    </center>
+
+</BorderPane>

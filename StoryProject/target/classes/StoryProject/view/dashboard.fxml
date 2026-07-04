@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="StoryProject.controller.DashboardController"
+            fitToWidth="true" prefWidth="1040" prefHeight="740"
+            stylesheets="@../resources/css/style.css">
+
+    <VBox spacing="18.0" styleClass="root-pane">
+        <padding><Insets top="24.0" right="28.0" bottom="24.0" left="28.0"/></padding>
+
+        <!-- En-tête -->
+        <HBox alignment="CENTER_LEFT" spacing="16.0">
+            <VBox HBox.hgrow="ALWAYS">
+                <Label text="Tableau de bord analytique" styleClass="dashboard-title"/>
+                <Label text="Vue d'ensemble de votre atelier d'écriture" styleClass="dashboard-subtitle"/>
+            </VBox>
+            <Button fx:id="btnRetour" text="← Retour" onAction="#onBtnBack"/>
+        </HBox>
+
+        <!-- Indicateurs clés -->
+        <HBox spacing="16.0">
+            <VBox styleClass="kpi-card" HBox.hgrow="ALWAYS">
+                <Label fx:id="lblNbHistoires" text="0" styleClass="kpi-number"/>
+                <Label text="Histoires" styleClass="kpi-label"/>
+            </VBox>
+            <VBox styleClass="kpi-card" HBox.hgrow="ALWAYS">
+                <Label fx:id="lblNbPersonnages" text="0" styleClass="kpi-number"/>
+                <Label text="Personnages" styleClass="kpi-label"/>
+            </VBox>
+            <VBox styleClass="kpi-card" HBox.hgrow="ALWAYS">
+                <Label fx:id="lblNbScenes" text="0" styleClass="kpi-number"/>
+                <Label text="Scènes" styleClass="kpi-label"/>
+            </VBox>
+            <VBox styleClass="kpi-card" HBox.hgrow="ALWAYS">
+                <Label fx:id="lblPctTermine" text="0 %" styleClass="kpi-number"/>
+                <Label text="Scènes terminées" styleClass="kpi-label"/>
+            </VBox>
+        </HBox>
+
+        <!-- Graphiques (2 x 2) -->
+        <GridPane hgap="18.0" vgap="18.0">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="50.0"/>
+                <ColumnConstraints percentWidth="50.0"/>
+            </columnConstraints>
+
+            <VBox styleClass="chart-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <Label text="Scènes par histoire" styleClass="chart-title"/>
+                <BarChart fx:id="chartScenesParHistoire" legendVisible="false" animated="false" prefHeight="260.0">
+                    <xAxis><CategoryAxis side="BOTTOM"/></xAxis>
+                    <yAxis><NumberAxis side="LEFT"/></yAxis>
+                </BarChart>
+            </VBox>
+
+            <VBox styleClass="chart-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <Label text="Statuts des scènes" styleClass="chart-title"/>
+                <PieChart fx:id="chartStatuts" prefHeight="260.0"/>
+            </VBox>
+
+            <VBox styleClass="chart-card" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <Label text="Personnages par rôle" styleClass="chart-title"/>
+                <BarChart fx:id="chartRoles" legendVisible="false" animated="false" prefHeight="260.0">
+                    <xAxis><CategoryAxis side="BOTTOM"/></xAxis>
+                    <yAxis><NumberAxis side="LEFT"/></yAxis>
+                </BarChart>
+            </VBox>
+
+            <VBox styleClass="chart-card" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Label text="Tags les plus utilisés" styleClass="chart-title"/>
+                <BarChart fx:id="chartTags" legendVisible="false" animated="false" prefHeight="260.0">
+                    <xAxis><CategoryAxis side="BOTTOM"/></xAxis>
+                    <yAxis><NumberAxis side="LEFT"/></yAxis>
+                </BarChart>
+            </VBox>
+        </GridPane>
+    </VBox>
+</ScrollPane>
